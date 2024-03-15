@@ -15,8 +15,18 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('home') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('pelanggan.index')" :active="request()->routeIs('pelanggan')">
+                        {{ __('pelanggan') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('penjualan.index')" :active="request()->routeIs('penjualan')">
+                        {{ __('penjualan') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('produk.index')" :active="request()->routeIs('produk')">
+                        {{ __('produk') }}
+                    </x-nav-link>
                 </div>
             </div>
+
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
