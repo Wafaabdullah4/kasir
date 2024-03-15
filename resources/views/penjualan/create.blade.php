@@ -22,15 +22,7 @@
                             <input type="text" id="total_harga" name="total_harga"
                                 class="form-input mt-1 block w-full">
                         </div>
-                        <div class="mb-4">
-                            <label for="pelangganid" class="block text-gray-700">Nama Pelanggan:</label>
-                            <select id="pelangganid" name="pelangganid" class="form-select mt-1 block w-full">
-                                @foreach ($pelanggans as $pelanggan)
-                                    <option value="{{ $pelanggan->pelangganid }}">{{ $pelanggan->nama_pelanggan }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+
                         <div class="mb-4">
                             <button type="submit"
                                 class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Simpan</button>

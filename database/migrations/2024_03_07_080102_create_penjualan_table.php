@@ -15,8 +15,6 @@ return new class extends Migration
             $table->increments('penjualanid');
             $table->date('tanggal_penjualan');
             $table->decimal('total_harga', 10, 2);
-            $table->unsignedInteger('pelangganid');
-            $table->foreign('pelangganid')->references('pelangganid')->on('pelanggan')->onDelete('cascade');
             $table->timestamps();
         });
     }

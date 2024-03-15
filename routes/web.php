@@ -28,7 +28,7 @@ Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name(
 Route::middleware(['auth', 'admin'])->group(function () {
     //route resource
     Route::resource('/produk', \App\Http\Controllers\ProdukController::class);
-    Route::resource('/pelanggan', \App\Http\Controllers\PelangganController::class);
+
     Route::resource('/penjualan', \App\Http\Controllers\PenjualanController::class);
     Route::resource('/detailpenjualan', \App\Http\Controllers\DetailpenjualanController::class);
 });

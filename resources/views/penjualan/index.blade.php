@@ -19,7 +19,6 @@
                                 <th class="py-2 px-4 bg-gray-200">ID</th>
                                 <th class="py-2 px-4 bg-gray-200">Tanggal Penjualan</th>
                                 <th class="py-2 px-4 bg-gray-200">Total Harga</th>
-                                <th class="py-2 px-4 bg-gray-200">Nama Pelanggan</th>
                                 <th class="py-2 px-4 bg-gray-200">Aksi</th>
                             </tr>
                         </thead>
@@ -27,13 +26,12 @@
                             @php
                                 $no = 1;
                             @endphp
-                            @foreach ($penjualans as $penjualan)
+                            @foreach ($datapenjualans as $penjualan)
                                 <tr>
                                     <td class="border px-4 py-2">{{ $no++ }}</td>
                                     <td class="border px-4 py-2">{{ $penjualan->tanggal_penjualan }}</td>
                                     <td class="border px-4 py-2">Rp
                                         {{ number_format($penjualan->total_harga, 0, ',', '.') }}</td>
-                                    <td class="border px-4 py-2">{{ $penjualan->pelanggan->nama_pelanggan }}</td>
 
                                     <td class="border px-4 py-2">
                                         <form action="{{ route('penjualan.destroy', $penjualan->penjualanid) }}"

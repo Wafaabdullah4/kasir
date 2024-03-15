@@ -4,40 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Penjualan;
-use App\Models\Pelanggan;
 
 class PenjualanController extends Controller
 {
     public function index()
     {
-        $penjualans = Penjualan::all();
-        return view('penjualan.index', compact('penjualans'));
+        $datapenjualans = Penjualan::all();
+        return view('penjualan.index', compact('datapenjualans'));
     }
 
     public function create()
     {
-        $pelanggans = Pelanggan::all();
-        return view('penjualan.create', compact('pelanggans'));
+        return view('penjualan.create');
     }
 
     public function store(Request $request)
     {
-        // Validasi data yang dikirimkan
-        $validatedData = $request->validate([
+        $request->validate([
             'tanggal_penjualan' => 'required|date',
-            'total_harga' => 'required|numeric',
-            'pelanggan_id' => 'required|exists:pelanggans,pelangganid'
+            'total_harga' => 'required|numeric|min:0',
         ]);
 
-        // Simpan data ke dalam database
-        $penjualan = Penjualan::create([
-            'tanggal_penjualan' => $validatedData['tanggal_penjualan'],
-            'total_harga' => $validatedData['total_harga'],
-            'pelanggan_id' => $validatedData['pelanggan_id'],
-        ]);
+        Penjualan::create($request->all());
 
-        // Redirect atau response yang sesuai, misalnya kembali ke halaman yang sesuai
-        return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil ditambahkan.');
+        return redirect()->route('penjualan.index')
+            ->with('success', 'Data penjualan berhasil disimpan.');
+    }
+
+    public function show(Penjualan $penjualan)
+    {
+        return view('penjualan.show', compact('penjualan'));
     }
 
     public function edit(Penjualan $penjualan)
@@ -49,24 +45,19 @@ class PenjualanController extends Controller
     {
         $request->validate([
             'tanggal_penjualan' => 'required|date',
-            'total_harga' => 'required|numeric',
-            'pelanggan_id' => 'required|exists:pelanggans,PelangganID'
+            'total_harga' => 'required|numeric|min:0',
         ]);
 
-        $penjualan->tanggal_penjualan = $request->tanggal_penjualan;
-        $penjualan->total_harga = $request->total_harga;
-        $penjualan->pelanggan_id = $request->pelanggan_id;
-        $penjualan->save();
+        $penjualan->update($request->all());
 
         return redirect()->route('penjualan.index')
-            ->with('success', 'Penjualan berhasil diperbarui.');
+            ->with('success', 'Data penjualan berhasil diperbarui.');
     }
 
     public function destroy(Penjualan $penjualan)
     {
         $penjualan->delete();
-
         return redirect()->route('penjualan.index')
-            ->with('success', 'Penjualan berhasil dihapus.');
+            ->with('success', 'Data penjualan berhasil dihapus.');
     }
 }
