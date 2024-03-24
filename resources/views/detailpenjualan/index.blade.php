@@ -10,71 +10,87 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h1 class="text-2xl font-bold mb-4">Daftar Detail Penjualan</h1>
-                    <a href="{{ route('detailpenjualan.create') }}"
-                        class="inline-block mb-4 px-4 py-2 bg-blue-500 text-gray-900 rounded hover:bg-blue-600">Tambah
-                        Detail Penjualan Baru</a>
-                    <table class="w-full">
-                        <thead>
-                            <tr>
-                                <th class="py-2 px-4 bg-gray-200">ID</th>
-                                <th class="py-2 px-4 bg-gray-200">Tanggal Penjualan </th>
-                                <th class="py-2 px-4 bg-gray-200">Nama Pelanggan </th>
-                                <th class="py-2 px-4 bg-gray-200">Nama Produk</th>
-                                <th class="py-2 px-4 bg-gray-200">Jumlah Produk</th>
-                                <th class="py-2 px-4 bg-gray-200">Subtotal</th>
-                                <th class="py-2 px-4 bg-gray-200">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $no = 1;
-                                $previousDate = null;
-                                $previousCustomer = null;
-                                $dateRowCount = 0;
-                                $customerRowCount = 0;
-                            @endphp
-                            @foreach ($detailpenjualans as $detailPenjualan)
-                                <tr>
-                                    <td class="border px-4 py-2">{{ $no++ }}</td>
-                                    @if ($previousDate != $detailPenjualan->penjualan->tanggal_penjualan)
-                                        @php $dateRowCount = $detailpenjualans->where('penjualan.tanggal_penjualan', $detailPenjualan->penjualan->tanggal_penjualan)->count(); @endphp
-                                        <td rowspan="{{ $dateRowCount }}" class="border px-4 py-2 text-center">
-                                            {{ \Carbon\Carbon::parse($detailPenjualan->penjualan->tanggal_penjualan)->translatedFormat('d F Y') }}
-                                        </td>
-                                    @endif
+                    <!-- Form Filter Tanggal -->
+                    <h2 class="text-2xl font-bold mb-4">Filter Tanggal</h2>
+                    <form action="{{ route('detail') }}" method="GET" class="mb-4">
+                        <div class="flex items-center">
+                            <label for="start_date" class="mr-2">Mulai Tanggal:</label>
+                            <input type="date" id="start_date" name="start_date" class="p-2 border rounded-md mr-4"
+                                value="{{ request('start_date') }}">
+                            <label for="end_date" class="mr-2">Sampai Tanggal:</label>
+                            <input type="date" id="end_date" name="end_date" class="p-2 border rounded-md mr-4"
+                                value="{{ request('end_date') }}">
+                            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Filter</button>
+                            <a href="{{ route('detail') }}"
+                                class="px-4 py-2 bg-gray-500 text-white rounded-md ml-2">Refresh</a>
+                        </div>
+                    </form>
+                    @if (session('error'))
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                            role="alert">
+                            <span class="block sm:inline">{{ session('error') }}</span>
+                        </div>
+                    @endif
 
-                                    @if ($previousCustomer != $detailPenjualan->penjualan->pelanggan->nama_pelanggan)
-                                        @php $customerRowCount = $detailpenjualans->where('penjualan.pelanggan.nama_pelanggan', $detailPenjualan->penjualan->pelanggan->nama_pelanggan)->count(); @endphp
-                                        <td rowspan="{{ $customerRowCount }}" class="border px-4 py-2">
-                                            {{ $detailPenjualan->penjualan->pelanggan->nama_pelanggan }}
-                                        </td>
-                                    @endif
 
-                                    <td class="border px-4 py-2">{{ $detailPenjualan->produk->namaproduk }}</td>
-                                    <td class="border px-4 py-2">{{ $detailPenjualan->jumlah_produk }}</td>
-                                    <td class="border px-4 py-2">Rp
-                                        {{ number_format($detailPenjualan->subtotal, 0, ',', '.') }}</td>
 
-                                    <td class="border px-4 py-2">
-                                        <form
-                                            action="{{ route('detailpenjualan.destroy', $detailPenjualan->detailid) }}"
-                                            method="POST">
-                                            <a href="{{ route('detailpenjualan.edit', $detailPenjualan->detailid) }}"
-                                                class="text-blue-500 hover:underline">Edit</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="ml-2 text-red-500 hover:underline">Hapus</button>
-                                        </form>
-                                    </td>
+                    <div class="overflow-x-auto">
+                        <table class="w-full bg-white shadow-md rounded my-6">
+                            <thead>
+                                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                    <th class="py-3 px-6 text-left">Tanggal Penjualan</th>
+                                    <th class="py-3 px-6 text-left">Nama Pelanggan</th>
+                                    <th class="py-3 px-6 text-left">Nama Produk</th>
+                                    <th class="py-3 px-6 text-left">Jumlah Produk</th>
+                                    <th class="py-3 px-6 text-left">Subtotal</th>
                                 </tr>
+                            </thead>
+                            <tbody class="text-gray-600 text-sm font-light">
                                 @php
-                                    $previousDate = $detailPenjualan->penjualan->tanggal_penjualan;
-                                    $previousCustomer = $detailPenjualan->penjualan->pelanggan->nama_pelanggan;
+                                    $groupedDetailPenjualans = $detailpenjualans->groupBy(
+                                        'penjualan.tanggal_penjualan',
+                                    );
+                                    $totalSubtotal = 0;
                                 @endphp
-                            @endforeach
-                        </tbody>
-                    </table>
+                                @foreach ($groupedDetailPenjualans as $tanggal => $details)
+                                    @php
+                                        $subtotal = 0;
+                                    @endphp
+                                    @foreach ($details as $index => $detail)
+                                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                            @if ($index === 0)
+                                                <td rowspan="{{ $details->count() }}"
+                                                    class="py-3 px-6 text-left whitespace-nowrap">
+                                                    {{ \Carbon\Carbon::parse($detail->penjualan->tanggal_penjualan)->translatedFormat('d F Y') }}
+                                                </td>
+                                            @endif
+                                            <td class="py-3 px-6 text-left">
+                                                {{ $detail->penjualan->pelanggan->nama_pelanggan }}</td>
+                                            <td class="py-3 px-6 text-left">{{ $detail->produk->namaproduk }}</td>
+                                            <td class="py-3 px-6 text-left">{{ $detail->jumlah_produk }}</td>
+                                            <td class="py-3 px-6 text-left">Rp
+                                                {{ number_format($detail->subtotal, 0, ',', '.') }}</td>
+                                        </tr>
+                                        @php
+                                            $subtotal += $detail->subtotal;
+                                            $totalSubtotal += $detail->subtotal;
+                                        @endphp
+                                    @endforeach
+                                    {{-- <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                        <td colspan="4" class="py-3 px-6 text-right font-bold">Total Tanggal
+                                            {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}</td>
+                                        <td class="py-3 px-6 text-left font-bold" colspan="2">Rp
+                                            {{ number_format($subtotal, 0, ',', '.') }}</td>
+                                    </tr> --}}
+                                @endforeach
+                                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                    <td colspan="4" class="py-3 px-6 text-left font-bold">Jumlah Total</td>
+                                    <td class="py-3 px-6 text-left font-bold">Rp
+                                        {{ number_format($totalSubtotal, 0, ',', '.') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

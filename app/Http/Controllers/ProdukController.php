@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 
@@ -103,5 +104,31 @@ class ProdukController extends Controller
 
         return redirect()->route('produk.index')
             ->with('success', 'Produk deleted successfully');
+    }
+
+
+    //update produk yang sudah habis
+    public function updateStockAndPrice(Request $request, Produk $produk)
+    {
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'stok' => 'required|numeric|min:0',
+            'harga' => 'required|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // Update stok dan harga produk
+        $produk->update([
+            'stok' => $request->stok,
+            'harga' => $request->harga,
+        ]);
+
+        return redirect()->route('produk.index')
+            ->with('success', 'Stok and price updated successfully.');
     }
 }

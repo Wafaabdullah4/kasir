@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->increments('penjualanid');
-            $table->date('tanggal_penjualan');
-            $table->decimal('total_harga', 10, 2);
-            $table->unsignedInteger('pelangganid');
+            $table->date('tanggal_penjualan')->nullable();
+            $table->decimal('total_harga', 10, 2)->nullable();
+            $table->unsignedInteger('pelangganid')->nullable();
             $table->foreign('pelangganid')->references('pelangganid')->on('pelanggan')->onDelete('cascade');
             $table->timestamps();
         });

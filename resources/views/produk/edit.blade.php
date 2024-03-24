@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h1 class="text-2xl font-bold mb-4">Edit Produk</h1>
-                    <form action="{{ route('produk.update', $produk->id) }}" method="POST">
+                    <form action="{{ route('produk.update', $produk->produkid) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="mb-4">

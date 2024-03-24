@@ -3,8 +3,8 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-
+use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\ProdukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
@@ -28,12 +28,15 @@ Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name(
 Route::middleware(['auth', 'admin'])->group(function () {
     //route resource
     Route::resource('/produk', \App\Http\Controllers\ProdukController::class);
+    Route::put('/produk/{produk}/update-stock-price', [ProdukController::class, 'updateStockAndPrice'])
+        ->name('produk.updateStockAndPrice');
     Route::resource('/pelanggan', \App\Http\Controllers\PelangganController::class);
     Route::resource('/penjualan', \App\Http\Controllers\PenjualanController::class);
+    Route::get('/detail', [PenjualanController::class, 'detailpenjualan'])->name('detail');
     Route::resource('/detailpenjualan', \App\Http\Controllers\DetailpenjualanController::class);
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'user'])->group(function () {
 });
 
 // Route::get('/dashboard', function () {
