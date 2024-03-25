@@ -40,6 +40,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'user'])->group(function () {
 
 });
+Route::resource('/users', \App\Http\Controllers\UserController::class);
+
   //route resource
   Route::resource('/produk', \App\Http\Controllers\ProdukController::class);
   Route::put('/produk/{produk}/update-stock-price', [ProdukController::class, 'updateStockAndPrice'])

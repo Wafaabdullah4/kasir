@@ -133,8 +133,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php $no = 1; @endphp
-                            @foreach ($produks as $produk)
+                            @php $no = 1;
+
+                            $sortedProduk = $produks->sortBy('namaproduk');
+                        @endphp
+                        {{-- @foreach ($sortedPenjualans as $penjualan)
+                            $sortedPenjualans = $penjualans->sortBy('tanggal_penjualan'); --}}
+
+                            @foreach ($sortedProduk as $produk)
                                 @if ($produk->stok > 0)
                                     <tr>
                                         <td

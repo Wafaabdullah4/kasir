@@ -6,7 +6,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6">
                 <h1 class="text-2xl font-bold mb-4">Data Petugas</h1>
-                <a href="{{ route('petugas.create') }}"
+                <a href="{{ route('users.create') }}"
                     class="inline-block mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Tambah
                     Petugas</a>
 
@@ -30,9 +30,9 @@
                                 <td class="py-3 px-6 text-left">{{ $petugas->name }}</td>
                                 <td class="py-3 px-6 text-left">{{ $petugas->email }}</td>
                                 <td class="py-3 px-6 text-left">
-                                    <a href="{{ route('petugas.edit', $petugas->id) }}"
+                                    <a href="{{ route('users.edit', $petugas->id) }}"
                                         class="text-blue-500 hover:text-blue-700 mr-2">Edit</a>
-                                    <form action="{{ route('petugas.destroy', $petugas->id) }}" method="POST"
+                                    <form action="{{ route('users.destroy', $petugas->id) }}" method="POST"
                                         class="inline">
                                         @csrf
                                         @method('DELETE')

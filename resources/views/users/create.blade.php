@@ -6,7 +6,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6">
                 <h1 class="text-2xl font-bold mb-4">Tambah Petugas</h1>
-                <form action="{{ route('petugas.store') }}" method="POST">
+                <form action="{{ route('users.store') }}" method="POST">
                     @csrf
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700">Nama Petugas:</label>

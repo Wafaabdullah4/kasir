@@ -50,7 +50,7 @@
                                     <td>
                                         <select name="detail[{{ $loop->index }}][produkid]"
                                             class="mt-1 p-2 border rounded-md w-full produk-select" required>
-                                            <option value="">Pilih Produk</option>
+                                            <option value="" >Pilih Produk</option>
                                             @foreach ($produks as $produk)
                                             <option value="{{ $produk->produkid }}"
                                                 {{ $detail->produkid == $produk->produkid ? 'selected' : '' }}

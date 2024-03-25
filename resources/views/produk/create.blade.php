@@ -49,7 +49,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="stok" class="block text-sm font-medium text-gray-700">Stok:</label>
-                        <input type="number" id="stok" name="stok" class="mt-1 p-2 border rounded-md w-full">
+                        <input type="number" id="stok" name="stok" class="mt-1 p-2 border rounded-md w-full " min="1">
                     </div>
                     <div class="mt-4">
                         <button type="submit" class="inline-block w-1/3 px-8 py-2 my-3 text-xs font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-blue-500 border-0 rounded-lg shadow-md select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px">Simpan</button>
