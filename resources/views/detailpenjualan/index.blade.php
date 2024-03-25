@@ -1,28 +1,29 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Admin Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.navAdmin')
 
+@section('tittle')
+Detail Penjualan
+@endsection
+@section('content')
+
+<div class="flex-none w-full max-w-full px-3">
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class=" mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h1 class="text-2xl font-bold mb-4">Daftar Detail Penjualan</h1>
+                    <p class="leading-normal uppercase dark:text-white dark:opacity-60 text-sm">Detail Penjualan</p>
                     <!-- Form Filter Tanggal -->
-                    <h2 class="text-2xl font-bold mb-4">Filter Tanggal</h2>
+                    <p class="leading-normal uppercase dark:text-white dark:opacity-60 text-sm">Filter berdasarkan tanggal</p>
                     <form action="{{ route('detail') }}" method="GET" class="mb-4">
                         <div class="flex items-center">
                             <label for="start_date" class="mr-2">Mulai Tanggal:</label>
-                            <input type="date" id="start_date" name="start_date" class="p-2 border rounded-md mr-4"
+                            <input type="date" id="start_date" name="start_date" class="p-2 border rounded-full mr-4"
                                 value="{{ request('start_date') }}">
                             <label for="end_date" class="mr-2">Sampai Tanggal:</label>
                             <input type="date" id="end_date" name="end_date" class="p-2 border rounded-md mr-4"
                                 value="{{ request('end_date') }}">
-                            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Filter</button>
+                            <button type="submit" class="px-4 text-xs py-2 bg-blue-500 text-white rounded-md">Filter</button>
                             <a href="{{ route('detail') }}"
-                                class="px-4 py-2 bg-gray-500 text-white rounded-md ml-2">Refresh</a>
+                            class="px-4 text-xs py-2 bg-blue-500 text-white rounded-md mx-3">Refresh</a>
                         </div>
                     </form>
                     @if (session('error'))
@@ -95,4 +96,5 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection

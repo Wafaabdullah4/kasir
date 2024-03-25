@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                    {{-- <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('home') }}
                     </x-nav-link>
                     <x-nav-link :href="route('pelanggan.index')" :active="request()->routeIs('pelanggan')">
@@ -26,6 +26,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('produk.index')" :active="request()->routeIs('produk')">
                         {{ __('produk') }}
+                    </x-nav-link> --}}
+                    <x-nav-link :href="route('petugas.index')" :active="request()->routeIs('petugas.index')">
+                        {{ __('petugas') }}
                     </x-nav-link>
                 </div>
             </div>

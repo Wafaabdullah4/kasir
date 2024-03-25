@@ -7,13 +7,13 @@
                 sidenav-close></i>
             <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
                 href="https://demos.creative-tim.com/argon-dashboard-tailwind/pages/dashboard.html" target="_blank">
-                <img src="{{asset('dashboard/build/assets/img/logo-ct-dark.png')}}"
+                <img src="{{asset('kiw kiw.jpg')}}"
                     class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-8"
                     alt="main_logo" />
                 <img src="{{asset('dashboard/build/assets/img/logo-ct.png')}}"
                     class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-8"
                     alt="main_logo" />
-                <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Argon Dashboard 2</span>
+                <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Spider Shop</span>
             </a>
         </div>
 
@@ -46,34 +46,63 @@
 
                 <li class="mt-0.5 w-full">
                     <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="./pages/billing.html">
+                        href="{{ route('penjualan.index') }}">
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center fill-current stroke-0 text-center xl:p-2.5">
                             <i class="relative top-0 text-sm leading-normal text-emerald-500 ni ni-credit-card"></i>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Billing</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Penjualan</span>
                     </a>
                 </li>
 
                 <li class="mt-0.5 w-full">
                     <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="./pages/virtual-reality.html">
+                        href="{{ route('detail') }}">
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                             <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-app"></i>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Virtual Reality</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Detail Penjualan</span>
                     </a>
                 </li>
 
                 <li class="mt-0.5 w-full">
                     <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="./pages/rtl.html">
+                        href="{{route('produk.index')}}">
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                             <i class="relative top-0 text-sm leading-normal text-red-600 ni ni-world-2"></i>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">RTL</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Produk</span>
+                    </a>
+                </li>
+                @if(Auth::user()->usertype=='admin')
+
+                <li class="mt-0.5 w-full">
+                    <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        href="{{route('petugas.index')}}">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                            <i class="relative top-0 text-sm leading-normal text-red-600 ni ni-world-2"></i>
+                        </div>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Petugas</span>
+                    </a>
+                </li>
+                @endif
+
+                <li class="-mt-10 w-32 mx-12">
+                    <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        href="">
+
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease"> <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form></span>
                     </a>
                 </li>
 

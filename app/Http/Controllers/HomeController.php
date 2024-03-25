@@ -15,7 +15,7 @@ class HomeController extends Controller
             $usertype = Auth()->user()->usertype;
 
             if ($usertype == 'user') {
-                return view('dashboard');
+                return view('petugas.petugashome');
             } else if ($usertype == 'admin') {
                 return view('admin.adminHome');
             } else {
